@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import SearchModal from '../components/SearchModal';
+//import SearchModal from '../components/SearchModal';
 import styles from './index.module.css';
 import React, {useState} from "react";
+import Link from '@docusaurus/Link';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -26,10 +27,10 @@ function HomepageHeader() {
               <h2 className={"text-base font-normal text-warning pb-5 mb-0"}>A lightning-fast <strong>PHP testing framework</strong> by MaplePHP</h2>
             </div>
             <div className={"flex flex-wrap gap-sm"}>
-              <a className={"button bg-primary"} href="/Unitary/docs/get-started">Get started</a>
-              <a className={"button bg-secondary"} href="#top-features">Features</a>
-              <a className={"button bg-secondary"} href="/Unitary/why-unitary">Why Unitary</a>
-              <a className={"button bg-secondary"} href="https://github.com/MaplePHP/unitary" target={"_blank"}>Github</a>
+              <Link className={"button bg-primary"} to="/docs/get-started">Get started</Link>
+              <Link className={"button bg-secondary"} to="#top-features">Features</Link>
+              <Link className={"button bg-secondary"} to="/why-unitary">Why Unitary</Link>
+              <Link className={"button bg-secondary"} to="https://github.com/MaplePHP/unitary" target={"_blank"}>Github</Link>
             </div>
           </article>
         </div>
