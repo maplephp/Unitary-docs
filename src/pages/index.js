@@ -28,7 +28,7 @@ function HomepageHeader() {
             </div>
             <div className={"flex flex-wrap gap-sm"}>
               <Link className={"button bg-primary"} to="/docs/get-started">Get started</Link>
-              <Link className={"button bg-secondary"} to="#top-features">Features</Link>
+              <a className={"button bg-secondary"} href="#top-features">Features</a>
               <Link className={"button bg-secondary"} to="/why-unitary">Why Unitary</Link>
               <Link className={"button bg-secondary"} to="https://github.com/MaplePHP/unitary" target={"_blank"}>Github</Link>
             </div>
