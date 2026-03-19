@@ -2,7 +2,7 @@
   "name": "unitary",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://maplephp.github.io/Unitary",
+  "homepage": "https://maplephp.github.io/unitary",
   "scripts": {
     "docusaurus": "docusaurus",
     "start": "docusaurus start",

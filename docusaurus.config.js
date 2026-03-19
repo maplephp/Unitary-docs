@@ -26,7 +26,7 @@ const config = {
   // Set the production url of your site here
   url: 'https://maplephp.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
-  baseUrl: '/Unitary/',
+  baseUrl: '/unitary/',
 
   organizationName: 'MaplePHP',
   projectName: 'Unitary',
@@ -84,7 +84,7 @@ const config = {
       attributes: {
         rel: 'apple-touch-icon',
         sizes: '180x180',
-        href: '/Unitary/apple-touch-icon.png',
+        href: '/unitary/apple-touch-icon.png',
       },
     },
     {
@@ -93,14 +93,14 @@ const config = {
         rel: 'icon',
         type: 'image/png',
         sizes: '96x96',
-        href: '/Unitary/favicon-96x96.png',
+        href: '/unitary/favicon-96x96.png',
       },
     },
     {
       tagName: 'link',
       attributes: {
         rel: 'manifest',
-        href: '/Unitary/site.webmanifest',
+        href: '/unitary/site.webmanifest',
       },
     },
 
@@ -109,7 +109,7 @@ const config = {
     //   tagName: 'link',
     //   attributes: {
     //     rel: 'mask-icon',
-    //     href: '/Unitary/safari-pinned-tab.svg',
+    //     href: '/unitary/safari-pinned-tab.svg',
     //     color: '#5bbad5',
     //   },
     // },
@@ -121,7 +121,7 @@ const config = {
       algolia: {
         appId: '3SHRGH4EEU',
         apiKey: '76329c646b57a7751fa2f6f536521bf2', // "Search-Only API Key" (safe to expose)
-        indexName: 'Unitary',
+        indexName: 'unitary',
 
         // Recommended:
         contextualSearch: true,
@@ -166,7 +166,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://github.com/MaplePHP/Unitary',
+            href: 'https://github.com/maplephp/unitary',
             label: 'GitHub',
             position: 'right',
           },
@@ -187,27 +187,27 @@ const config = {
           {
             title: 'Community',
             items: [
-              {label: 'GitHub', href: 'https://github.com/MaplePHP/Unitary'},
+              {label: 'GitHub', href: 'https://github.com/maplephp/unitary'},
               {label: 'LinkedIn', href: 'https://se.linkedin.com/in/daniel-ronkainen-161b3386/en'},
             ],
           },
           {
             title: 'More',
             items: [
-              {label: 'Unitary', href: 'https://github.com/MaplePHP/unitary'},
-              {label: 'Emitron', href: 'https://github.com/MaplePHP/maplephp'},
-              {label: 'HTTP message', href: 'https://github.com/MaplePHP/http'},
-              {label: 'Prompts', href: 'https://github.com/MaplePHP/Prompts'},
-              {label: 'Blunder', href: 'https://github.com/MaplePHP/Blunder'},
+              {label: 'Unitary', href: 'https://github.com/maplephp/unitary'},
+              {label: 'Emitron', href: 'https://github.com/maplephp/maplephp'},
+              {label: 'HTTP message', href: 'https://github.com/maplephp/http'},
+              {label: 'Prompts', href: 'https://github.com/maplephp/Prompts'},
+              {label: 'Blunder', href: 'https://github.com/maplephp/Blunder'},
             ],
           },
           {
             title: 'More',
             items: [
-              {label: 'Validate', href: 'https://github.com/MaplePHP/validate'},
-              {label: 'Darn Tidy object', href: 'https://github.com/MaplePHP/dto'},
-              {label: 'Container', href: 'https://github.com/MaplePHP/container'},
-              {label: 'Cache', href: 'https://github.com/MaplePHP/cache'},
+              {label: 'Validate', href: 'https://github.com/maplephp/validate'},
+              {label: 'Darn Tidy object', href: 'https://github.com/maplephp/dto'},
+              {label: 'Container', href: 'https://github.com/maplephp/container'},
+              {label: 'Cache', href: 'https://github.com/maplephp/cache'},
             ],
           },
         ],
