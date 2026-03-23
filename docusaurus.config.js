@@ -121,7 +121,7 @@ const config = {
       algolia: {
         appId: '3SHRGH4EEU',
         apiKey: '76329c646b57a7751fa2f6f536521bf2', // "Search-Only API Key" (safe to expose)
-        indexName: 'unitary',
+        indexName: 'Unitary',
 
         // Recommended:
         contextualSearch: true,
