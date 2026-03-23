@@ -28,8 +28,8 @@ const config = {
   // Set the /<baseUrl>/ pathname under which your site is served
   baseUrl: '/unitary/',
 
-  organizationName: 'MaplePHP',
-  projectName: 'Unitary',
+  organizationName: 'maplephp',
+  projectName: 'unitary',
   deploymentBranch: 'gh-pages',
   trailingSlash: false,
 
