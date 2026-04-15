@@ -1,13 +1,35 @@
 ---
 sidebar_position: 2
+description: This is the meta description that will be used for SEO and shown in search results.
 ---
-
 
 # Write Tests
 
-Groups define the subject under test. Each test starts with an input (`expect()` or `against()`) followed by a chain of validations that describe the expected behavior.
+Unitary tests are structured around **groups**.
 
-A test is completed by calling `validate()` or `assert()`.
+A `group()` defines what is being tested and acts as a container for one or more tests. Inside a group, you create individual tests using `expect()` or `check()`.
+
+Each test describes a specific behavior and can be completed by calling `validate()` or `assert()`.
+
+
+<details>
+
+  <summary>Read more</summary>
+
+
+  A test file consists of one or more `group()` blocks. Each group focuses on a single area of logic and should contain multiple independent tests.
+
+  Think of it like this:
+
+  * `group()` → defines what is being tested
+  * `expect()` / `check()` → defines a single test
+  * `validate()` / `assert()` → executes and reports the test
+
+  Each group runs in isolation, allowing you to safely include setup logic without leaking side effects between tests.
+  Tests created with `check()` also run in isolation, ensuring that conditional logic does not affect other tests.
+</details>
+
+
 
 ---
 
@@ -48,8 +70,6 @@ php vendor/bin/unitary
 #### Response
 
 ![Unitary CLI response](https://wazabii.se/github-assets/unitary/unitary-cli-state-pass.png)
-
-
 
 ---
 
@@ -93,7 +113,7 @@ group("Check against example", function(TestCase $case) {
 
     $case->check(function (Expect $expect) {
 
-        $json = '{"response":{"status":200,"message":"ok"}}';
+        $json = $apiClient->get("/users");
 
         $expect->against($json)
             ->isJson()
@@ -104,58 +124,80 @@ group("Check against example", function(TestCase $case) {
 });
 ```
 
-### Soft stops with `check()`
+### Early exit in tests
 
-Soft stops are useful when later validations depend on earlier assumptions being correct. Instead of producing multiple misleading failures, execution stops early and surfaces the root cause.
+Use `check()` when a test consists of multiple dependent steps in isolation.
 
-Calling `assert()` will stop execution of the current `check()` block **only if the validation fails**, preventing subsequent validations from running.
+A `check()` block is **reported as a single test**, even if it contains several validations.
+
+When an `assert()` fails, it triggers a **soft stop**, immediately halting execution within the block. This prevents cascading failures and highlights the root cause.
 
 ```php
-use MaplePHP\Unitary\{TestCase,Expect};
+use MaplePHP\Unitary\{TestCase, Expect};
 
-group("API response validation", function(TestCase $case) {
-    $case->check(function(Expect $expect) {
+group("API response validation", function (TestCase $case) {
+
+    // ONE test
+    $case->check(function (Expect $expect) use ($apiClient) {
 
         $response = $apiClient->get("/users/123");
 
-        $case->expect($response->getStatusCode())
+        // Step 1
+        $expect->against($response->getStatusCode())
             ->isEqualTo(200)
             ->assert("API must return 200 before validating response body");
 
         $data = json_decode($response->getBody(), true);
 
-        $case->expect($data)
+        // Step 2 (only runs if step 1 passed)
+        $expect->against($data)
             ->isArray()
             ->assert("Response body must be valid JSON");
 
-        $case->against($data)
+        // Step 3 (only runs if step 2 passed)
+        $expect->against($data)
             ->hasKey("id")
             ->hasKey("email")
             ->assert();
 
-    });
+    }, "Validate API response");
+
 });
 ```
 
 ---
 
-## Hard stops
+## Abort test group on failure
 
 A hard stop aborts the current group immediately. No further validations or logic inside that group will run. Execution will continue with the next group in the same test file, if it exists.
 
 You may chain `assert()` as the final step instead of `validate()`. If the validation fails, it triggers a **hard stop**, immediately aborting the group.
+
+A `check()` block counts as a single test. You may perform multiple validations inside it, but they all belong to the same isolated test flow.
 
 ```php
 use MaplePHP\Unitary\{Expect,TestCase};
 
 group("Validating API Response", function(TestCase $case) {
 
-    $json = '{"response":{"status":404,"message":"ok"}}';
+    $json = $apiClient->get("/users");
 
+    // Test 1
     $case->expect($json)
         ->isJson()
         ->hasJsonValueAt("response.status", 200)
         ->assert("API response status");
+
+    // Test 2
+    $case->check(function(Expect $expect) {
+        $request = request();
+
+        $case->against($request->getUri()->getQuery())
+          ->hasQueryParam("id", 1)
+          ->hasQueryParam("slug", "hello");
+
+    })->assert("Request query params must be valid");
+
 });
 ```
 
@@ -190,8 +232,7 @@ group("Debug example", function(TestCase $case) {
 
 When a test requires logic not covered by built-in expectations, you can define custom validations directly.
 
-A native `assert()` inside a **group** creates a hard stop.
-Inside a **validation callback**, it becomes a soft stop and the validation is still reported.
+A native `assert()` inside a **group** creates a hard stop. Inside a **validation callback**, it becomes a soft stop and the validation is still reported.
 
 ```php
 use MaplePHP\Unitary\{Expect,TestCase};
@@ -200,13 +241,13 @@ group("Preconditions", function(TestCase $case) {
 
     assert(1 === 1, "Setup is invalid 1");
 
-    $case->validate($userData, function(Expect $expect) {
+    $case->check($userData, function(Expect $expect) {
         assert(1 === 1, "Setup is invalid 2");
     });
 
-    $case->validate(1, function(Expect $expect) {
+    $case->check(function(Expect $expect) {
         return $expect->val() === 1;
-    });
+    }, "Test json validation");
 });
 ```
 
